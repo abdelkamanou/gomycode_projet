@@ -1,0 +1,68 @@
+router.get("/Register_verification",async (req,res)=>{
+const {token_mail_verification} =req.body
+try{
+    const searchToken = await Register_user_verefication.findOne({ token_mail_verification})
+    if (!searchToken) {return res.status(400).json({msg : "wrong code...!!!please check your box mail and verify"})}
+      result = await searchToken
+      res.status(200).json({res:result , msg:' verification sucess '})
+
+} catch(error){
+    res.status(400).json({ errors: error })
+
+}
+
+})
+
+//send token to mail to complet registration 
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.gmail.com",
+    auth: {
+        user: 'youremail@gmail.com',
+        pass: 'xxxxxxxxxx',
+    },
+    secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+});
+
+router.post('/Register_verification', (req, res) => {
+    const {to, subject, text } = req.body;
+    const mailData = {
+        from: 'youremail@gmail.com',
+        to: "to",
+        subject: "subject",
+        text: "text",
+        html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>',
+    };
+    transporter.sendMail(mailData, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        res.status(200).send({ message: "Mail send", message_id: info.messageId });
+    });
+});
+
+
+   <div className="box">  
+           <select>
+    <option  onClick={setRegion("Gafsa")}  >Gafsa</option>
+    <option  onClick={setRegion("Gabes")} >Gabes</option>
+    <option onClick={setRegion("Tunis")} >Tunis</option>
+  </select>
+  </div> 
+<option onClick={setRegion("Sfax")} >Sfax</option>
+    <option value={setRegion("Ariana")} >Ariana</option>
+    <option value={setRegion("Nabeul")} >Nabeul</option>
+    <option  value={setRegion("Tozeur")} >Touzeur</option>
+    <option  value={setRegion("Bizert")} >Bizert</option>
+    <option  value={setRegion("Beja")}  >Beja</option>
+    <option   value='Kasserin'  >Kasserin</option>
+
+
+onChange={(e)=> setGenre(e.target.value)}
+
+
+
+console.dir(app.locals.email)
+// => 'me@myapp.com'
